@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trăng Vàng – Nguyên liệu chất lượng cao</title>
+  <meta name="description" content="CÔNG TY TNHH SX TM TRĂNG VÀNG – Chuyên cung cấp tinh dầu, hương liệu và nguyên liệu chất lượng cao phục vụ ngành thực phẩm, dược phẩm và mỹ phẩm tại Việt Nam." />
+
+  <!-- Site config (chỉnh assets/js/site-config.js) -->
+  <script src="assets/js/site-config.js"></script>
+  <script src="assets/js/site-config-apply.js"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    var CFG = window.SITE_CONFIG;
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { gold: CFG.colors.gold, rose: CFG.colors.rose, sage: CFG.colors.sage, stone: CFG.colors.stone },
+          fontFamily: {
+            serif: [CFG.fonts.heading, 'Georgia', 'serif'],
+            sans:  [CFG.fonts.body, 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    /* ── Base ── */
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--rose-50); color: var(--stone-900); }
+    /* Soft UI: bóng đổ mềm thay cho bóng đậm */
+    .shadow-sm, .shadow-lg, .shadow-xl { box-shadow: var(--shadow-soft) !important; }
+    .shadow-2xl { box-shadow: var(--shadow-soft-lg) !important; }
+    :focus-visible { outline: 3px solid var(--gold-600); outline-offset: 3px; border-radius: 4px; }
+
+    /* ── Scroll-based nav shadow ── */
+    #navbar { transition: box-shadow .3s, background .3s; }
+    #navbar.scrolled { box-shadow: 0 6px 28px rgba(45,52,54,.08); background: rgba(255,245,245,.95); backdrop-filter: blur(8px); }
+
+    /* ── Hover underline link ── */
+    .nav-link { position: relative; }
+    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:2px; background:var(--gold-700); transition: width .25s; }
+    .nav-link:hover::after, .nav-link.active::after { width:100%; }
+
+    /* ── Gold gradient button ── */
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
+      color: var(--stone-900);
+      box-shadow: 0 6px 16px rgba(212,175,55,.35), inset 0 1px 0 rgba(255,255,255,.45);
+      transition: filter .25s, transform .25s, box-shadow .25s;
+    }
+    .btn-gold:hover { filter: brightness(1.05); transform: translateY(-2px); box-shadow: 0 10px 22px rgba(212,175,55,.4), inset 0 1px 0 rgba(255,255,255,.45); }
+    .btn-outline-gold { border: 1.5px solid var(--gold-700); color: var(--gold-700); transition: background .2s, color .2s; }
+    .btn-outline-gold:hover { background: var(--gold-500); border-color: var(--gold-500); color: var(--stone-900); }
+
+    /* ── Tab system ── */
+    .tab-btn { transition: color .2s, border-color .2s, background .2s; border-radius: 9999px; border-bottom-width: 0 !important; }
+    .tab-btn.active { background: #fff; box-shadow: var(--shadow-soft); }
+    .tab-btn.active { color: var(--gold-700); border-bottom-color: var(--gold-700); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: grid; animation: tabIn .35s ease; }
+    @keyframes tabIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    section[id] { scroll-margin-top: 72px; }
+    .nav-link.active { color: var(--gold-700); }
+
+    /* ── Product card ── */
+    .product-card { transition: transform .3s ease, box-shadow .3s ease; box-shadow: var(--shadow-soft); }
+    .product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft-lg) !important; }
+    .product-card .overlay { opacity: 0; transition: opacity .25s; }
+    .product-card:hover .overlay, .product-card:focus-within .overlay { opacity: 1; }
+
+    /* ── Hero parallax light ── */
+    .hero-bg { background-attachment: fixed; }
+
+    /* ── Testimonial card ── */
+    .testimonial-card { transition: transform .25s, box-shadow .25s; }
+    .testimonial-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft-lg) !important; }
+
+    /* ── Floating buttons ── */
+    .float-btn { transition: transform .2s, box-shadow .2s; }
+    .float-btn:hover { transform: scale(1.06); box-shadow: var(--shadow-soft-lg) !important; }
+
+    /* ── Section reveal ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── Mobile menu ── */
+    #mobile-menu { transition: max-height .35s ease, opacity .3s; max-height: 0; overflow: hidden; opacity: 0; }
+    #mobile-menu.open { max-height: 480px; opacity: 1; }
+
+    /* ── Gallery grid ── */
+    .gallery-item { overflow: hidden; border-radius: 24px; box-shadow: var(--shadow-soft); }
+    .gallery-item img { transition: transform .4s ease; width: 100%; height: 100%; object-fit: cover; }
+    .gallery-item:hover img { transform: scale(1.06); }
+
+    /* ── Why us icon circle ── */
+    .icon-circle { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--gold-100), var(--gold-300)); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    /* ── Touch devices: luôn hiện nút liên hệ trên thẻ sản phẩm ── */
+    @media (hover: none) { .product-card .overlay { opacity: 1; background: linear-gradient(to top, rgba(28,25,23,.75), transparent 55%); align-items: flex-end; padding-bottom: .75rem; } }
+
+    /* ── Prefers reduced motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { transition: none; opacity: 1; transform: none; }
+      .product-card, .testimonial-card, .float-btn, .btn-gold, .gallery-item img { transition: none; }
+      .animate-pulse { animation: none; }
+      .tab-panel.active { animation: none; }
+      #mobile-menu { transition: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ════════════════════════════════════
+     TOP BAR
+════════════════════════════════════ -->
+<div class="bg-rose-100 text-stone-700 text-xs font-sans py-2 px-4 text-center tracking-wide leading-relaxed">
+  <i class="fa-regular fa-clock text-gold-700 mr-1" aria-hidden="true"></i> Thời gian làm việc: <strong class="text-gold-700" data-cfg="contact.workingHours">Thứ 2 – Chủ nhật</strong> <span class="mx-2" aria-hidden="true">|</span> <i class="fa-solid fa-phone text-gold-700 mr-1" aria-hidden="true"></i> Hotline: <a href="tel:0909017337" data-cfg-href="tel:{contact.hotline}" data-cfg="contact.hotlineDisplay" class="text-gold-700 hover:text-gold-800 font-semibold cursor-pointer">0909 01 7337</a>
+</div>
+
+<!-- ════════════════════════════════════
+     NAVBAR
+════════════════════════════════════ -->
+<nav id="navbar" class="sticky top-0 z-50 bg-rose-50 border-b border-rose-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+
+    <!-- Logo -->
+    <a href="#home" class="flex items-center gap-3 cursor-pointer">
+      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-700 flex items-center justify-center shadow p-0.5">
+        <img data-cfg-src="brand.initials" src="assets/images/about/founder-photo.jpg" alt="Logo" class="w-full h-full object-cover rounded-full" />
+      </div>
+      <div class="leading-tight">
+        <div class="font-serif font-semibold text-stone-900 text-lg leading-none" data-cfg="brand.name">Trăng Vàng</div>
+        <div class="text-[10px] text-stone-500 font-sans uppercase tracking-widest" data-cfg="brand.nameEn">Golden Moon</div>
+      </div>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-7 text-sm font-medium text-stone-700">
+      <a href="#home"       class="nav-link active cursor-pointer">Trang chủ</a>
+      <a href="#about"      class="nav-link cursor-pointer">Giới thiệu</a>
+      <a href="#products"   class="nav-link cursor-pointer">Sản phẩm</a>
+      <a href="#gallery"    class="nav-link cursor-pointer">Thư viện</a>
+      <a href="#why-us"     class="nav-link cursor-pointer">Vì sao chọn?</a>
+      <a href="#contact"    class="nav-link cursor-pointer">Liên hệ</a>
+    </div>
+
+    <!-- CTA -->
+    <div class="hidden md:flex items-center gap-3">
+      <a href="tel:0909017337" data-cfg-href="tel:{contact.hotline}" class="btn-outline-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer whitespace-nowrap">
+        <i class="fa-solid fa-phone mr-1" aria-hidden="true"></i> <span data-cfg="contact.hotlineDisplay">0909 01 7337</span>
+      </a>
+      <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">
+        Liên hệ ngay
+      </a>
+    </div>
+
+    <!-- Hamburger -->
+    <button id="hamburger" class="md:hidden p-2 rounded text-stone-700 hover:text-gold-700 cursor-pointer" aria-label="Mở menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path id="ham-icon" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden bg-rose-50 border-t border-rose-200 px-4">
+    <div class="py-4 flex flex-col gap-4 text-sm font-medium text-stone-700">
+      <a href="#home"     class="cursor-pointer hover:text-gold-700">Trang chủ</a>
+      <a href="#about"    class="cursor-pointer hover:text-gold-700">Giới thiệu</a>
+      <a href="#products" class="cursor-pointer hover:text-gold-700">Sản phẩm</a>
+      <a href="#gallery"  class="cursor-pointer hover:text-gold-700">Thư viện</a>
+      <a href="#why-us"   class="cursor-pointer hover:text-gold-700">Vì sao chọn?</a>
+      <a href="#contact"  class="cursor-pointer hover:text-gold-700">Liên hệ</a>
+      <a href="tel:0909017337" data-cfg-href="tel:{contact.hotline}" class="btn-gold text-center text-xs font-semibold px-4 py-3 rounded-full cursor-pointer"><i class="fa-solid fa-phone mr-1" aria-hidden="true"></i> <span data-cfg="contact.hotlineDisplay">0909 01 7337</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════
+     HERO
+════════════════════════════════════ -->
+<section id="home" class="relative overflow-hidden min-h-[90vh] flex items-center">
+
+  <!-- Background image -->
+  <div class="absolute inset-0">
+    <img src="assets/images/hero/banner.png" data-cfg-src="brand.banner" alt="Trăng Vàng hero" class="w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-r from-stone-950/80 via-stone-900/60 to-transparent"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-24 md:py-32">
+    <div class="max-w-xl">
+      <p class="text-gold-400 text-xs font-sans font-semibold uppercase tracking-[.2em] mb-4 reveal visible">
+        Nguyên liệu cao cấp từ thiên nhiên
+      </p>
+      <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl text-white leading-tight mb-6 reveal visible" style="transition-delay:.1s">
+        Trăng Vàng –<br/>
+        <em class="text-gold-400">Đồng hành</em><br/>
+        cùng giá trị nguyên bản
+      </h1>
+      <p class="text-stone-300 font-sans text-base leading-relaxed mb-8 reveal visible" style="transition-delay:.2s">
+        Chuyên cung cấp <strong class="text-white">tinh dầu, hương liệu</strong> và nguyên liệu chất lượng cao phục vụ ngành <strong class="text-white">thực phẩm, dược phẩm và mỹ phẩm</strong> tại Việt Nam.
+      </p>
+      <div class="flex flex-wrap gap-4 reveal visible" style="transition-delay:.3s">
+        <a href="#products" class="btn-gold font-sans font-semibold px-7 py-3 rounded-full text-sm cursor-pointer shadow-lg">
+          Xem sản phẩm
+        </a>
+        <a href="#contact" class="btn-outline-gold font-sans font-semibold px-7 py-3 rounded-full text-sm cursor-pointer border-white text-white hover:bg-white hover:text-stone-900">
+          Liên hệ đặt hàng
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="absolute bottom-0 left-0 right-0 bg-white/10 backdrop-blur-md border-t border-white/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 grid grid-cols-3 gap-4 text-center text-white">
+      <div>
+        <div class="font-serif text-2xl font-bold text-gold-400">10+</div>
+        <div class="text-[11px] font-sans opacity-80">Năm kinh nghiệm</div>
+      </div>
+      <div class="border-x border-white/20">
+        <div class="font-serif text-2xl font-bold text-gold-400">500+</div>
+        <div class="text-[11px] font-sans opacity-80">Khách hàng tin dùng</div>
+      </div>
+      <div>
+        <div class="font-serif text-2xl font-bold text-gold-400">50+</div>
+        <div class="text-[11px] font-sans opacity-80">Sản phẩm đa dạng</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     ABOUT
+════════════════════════════════════ -->
+<section id="about" class="py-20 md:py-28 bg-rose-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-12 items-center">
+
+    <!-- Images -->
+    <div class="relative reveal">
+      <img src="assets/images/about/about-women-kitchen.jpg" alt="Quy trình sản xuất"
+           class="rounded-3xl shadow-2xl w-full object-cover h-80 md:h-[460px]" />
+      <!-- Floating card -->
+      <div class="absolute -bottom-6 -right-4 bg-white text-stone-900 rounded-3xl px-5 py-4 shadow-xl max-w-[200px]">
+        <img src="assets/images/about/founder-photo.jpg" alt="Founder"
+             class="w-12 h-12 rounded-full object-cover mb-2 border-2 border-gold-400" />
+        <div class="font-serif text-sm font-semibold">"<span data-cfg="brand.slogan">Chất lượng tạo nên giá trị</span>"</div>
+        <div class="text-stone-500 text-xs mt-1 whitespace-nowrap">— Ban lãnh đạo Trăng Vàng</div>
+      </div>
+      <!-- Gold accent -->
+      <div class="absolute -top-4 -left-4 w-24 h-24 rounded-full bg-rose-300/40 -z-10"></div>
+    </div>
+
+    <!-- Text -->
+    <div class="reveal" style="transition-delay:.15s">
+      <p class="text-gold-700 text-xs font-sans font-semibold uppercase tracking-[.2em] mb-3">Về chúng tôi</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-stone-900 font-semibold leading-tight mb-5">
+        Công ty TNHH SX TM<br/><em class="text-gold-700">Trăng Vàng</em>
+      </h2>
+      <p class="font-sans text-stone-600 text-[15px] leading-relaxed mb-5">
+        Là đơn vị chuyên cung cấp <strong>tinh dầu, hương liệu</strong> và nguyên liệu chất lượng cao phục vụ cho các ngành thực phẩm, dược phẩm và mỹ phẩm tại Việt Nam. Với phương châm <em>"Chất lượng tạo nên giá trị"</em>, chúng tôi không ngừng nỗ lực để mang đến những giải pháp nguyên liệu tối ưu.
+      </p>
+
+      <div class="grid sm:grid-cols-2 gap-5 mb-8">
+        <div class="p-5 rounded-3xl bg-white border border-rose-100 shadow-sm">
+          <div class="text-gold-700 font-serif text-lg font-semibold mb-1"><i class="fa-solid fa-bullseye mr-1.5" aria-hidden="true"></i>Tầm nhìn</div>
+          <p class="text-stone-600 text-sm leading-relaxed">Trở thành nhà cung cấp tinh dầu, hương liệu hàng đầu, đáng tin cậy trong chuỗi cung ứng tại Việt Nam.</p>
+        </div>
+        <div class="p-5 rounded-3xl bg-white border border-rose-100 shadow-sm">
+          <div class="text-gold-700 font-serif text-lg font-semibold mb-1"><i class="fa-solid fa-leaf mr-1.5" aria-hidden="true"></i>Sứ mệnh</div>
+          <p class="text-stone-600 text-sm leading-relaxed">Góp phần nâng cao giá trị sản phẩm Việt thông qua việc cung cấp nguyên liệu chất lượng, an toàn và sáng tạo.</p>
+        </div>
+      </div>
+
+      <a href="#contact" class="btn-gold font-sans font-semibold px-6 py-3 rounded-full text-sm cursor-pointer inline-block">
+        Tìm hiểu thêm <i class="fa-solid fa-arrow-right ml-1" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     PRODUCTS (Tab system)
+════════════════════════════════════ -->
+<section id="products" class="py-20 md:py-28 bg-sage-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+    <!-- Header -->
+    <div class="text-center mb-12 reveal">
+      <p class="text-gold-700 text-xs font-sans font-semibold uppercase tracking-[.2em] mb-3">Danh mục sản phẩm</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-stone-900 font-semibold mb-4">
+        Sản phẩm của chúng tôi
+      </h2>
+      <p class="font-sans text-stone-500 text-[15px] max-w-2xl mx-auto">
+        Đa dạng nguyên liệu chất lượng cao từ các nguồn uy tín: Hàn Quốc, Pháp, Mỹ, Việt Nam
+      </p>
+    </div>
+
+    <!-- Tabs -->
+    <div id="product-tabs-container" class="sticky top-[72px] lg:top-[80px] z-40 bg-sage-50/90 backdrop-blur-md py-4 border-y border-white shadow-sm mb-10 transition-all" style="transition-delay:.1s">
+      <div class="flex flex-wrap justify-center gap-2 max-w-7xl mx-auto" role="tablist" aria-label="Danh mục sản phẩm">
+        <button onclick="switchTab('tab-huong')" id="btn-tab-huong" role="tab" aria-controls="tab-huong" aria-selected="true"
+          class="tab-btn active border-b-2 border-transparent px-5 py-2 text-sm font-semibold font-sans text-stone-500 cursor-pointer hover:text-gold-700 transition-colors">
+          <i class="fa-solid fa-spa mr-1.5" aria-hidden="true"></i>Hương liệu
+        </button>
+        <button onclick="switchTab('tab-tinhdau')" id="btn-tab-tinhdau" role="tab" aria-controls="tab-tinhdau" aria-selected="false"
+          class="tab-btn border-b-2 border-transparent px-5 py-2 text-sm font-semibold font-sans text-stone-500 cursor-pointer hover:text-gold-700 transition-colors">
+          <i class="fa-solid fa-droplet mr-1.5" aria-hidden="true"></i>Tinh dầu
+        </button>
+        <button onclick="switchTab('tab-mau')" id="btn-tab-mau" role="tab" aria-controls="tab-mau" aria-selected="false"
+          class="tab-btn border-b-2 border-transparent px-5 py-2 text-sm font-semibold font-sans text-stone-500 cursor-pointer hover:text-gold-700 transition-colors">
+          <i class="fa-solid fa-palette mr-1.5" aria-hidden="true"></i>Màu thực phẩm
+        </button>
+        <button onclick="switchTab('tab-other')" id="btn-tab-other" role="tab" aria-controls="tab-other" aria-selected="false"
+          class="tab-btn border-b-2 border-transparent px-5 py-2 text-sm font-semibold font-sans text-stone-500 cursor-pointer hover:text-gold-700 transition-colors">
+          <i class="fa-solid fa-box-open mr-1.5" aria-hidden="true"></i>Nguyên liệu khác
+        </button>
+      </div>
+    </div>
+
+    <!-- Tab: Hương liệu -->
+    <div id="tab-huong" role="tabpanel" aria-labelledby="btn-tab-huong" class="tab-panel active grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+      <div class="col-span-full flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/80 rounded-3xl px-6 py-5 border border-white shadow-sm">
+        <div class="flex items-start gap-4">
+          <div class="icon-circle"><i class="fa-solid fa-spa text-gold-700 text-xl" aria-hidden="true"></i></div>
+          <div>
+            <h3 class="font-serif text-2xl font-semibold text-stone-900">Hương liệu <span class="text-sm font-sans font-medium text-stone-500">· 9 sản phẩm</span></h3>
+            <p class="font-sans text-stone-600 text-sm mt-1">Hương liệu thực phẩm: trái cây, bắp, khoai môn, cà phê… dạng bột và lỏng.</p>
+          </div>
+        </div>
+        <div class="flex pl-3 md:pl-0" aria-hidden="true"><img src="assets/images/products/other/product-photo-7.jpg" alt="" loading="lazy" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-4 border-white shadow-sm -ml-3 first:ml-0" /><img src="assets/images/products/other/product-photo-1.jpg" alt="" loading="lazy" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-4 border-white shadow-sm -ml-3 first:ml-0" /><img src="assets/images/products/other/product-photo-5.jpg" alt="" loading="lazy" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-4 border-white shadow-sm -ml-3 first:ml-0" /></div>
+      </div>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/other/product-photo-1.jpg" alt="Hương Khóm Dứa" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Hương liệu trái cây</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Hương Khóm Dứa</h3>
+          <p class="text-stone-500 text-xs mt-1">Pineapple Flavour</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/other/product-photo-2.jpg" alt="Hương Xoài" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Hương liệu trái cây</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Hương Xoài</h3>
+          <p class="text-stone-500 text-xs mt-1">Mango Flavour</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/other/product-photo-3.jpg" alt="Hương Bắp" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Hương liệu</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Hương Bắp</h3>
+          <p class="text-stone-500 text-xs mt-1">Corn Flavour</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/other/product-photo-4.jpg" alt="Hương Khoai Môn" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Hương liệu</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Hương Khoai Môn</h3>
+          <p class="text-stone-500 text-xs mt-1">Taro Flavour</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/other/product-photo-5.jpg" alt="Hương Vải" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Hương liệu trái cây</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Hương Vải</h3>
+          <p class="text-stone-500 text-xs mt-1">Lychee Flavour</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/other/product-photo-6.jpg" alt="Hương Dừa" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Hương liệu</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Hương Dừa</h3>
+          <p class="text-stone-500 text-xs mt-1">Coconut Flavour</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/other/product-photo-7.jpg" alt="Hương Cà Phê Nguyên" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Hương liệu đặc biệt</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Hương Cà Phê Nguyên</h3>
+          <p class="text-stone-500 text-xs mt-1">Coffee Flavour</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/essential-oils/product-coffee-cream.webp" alt="Hương Kem Cà Phê" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Hương liệu đặc biệt</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Hương Kem Cà Phê</h3>
+          <p class="text-stone-500 text-xs mt-1">Coffee Cream Flavour</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/other/product-photo-8.jpg" alt="Hương Trái Cây Tổng Hợp" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Hương liệu tổng hợp</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Hương Trái Cây Tổng Hợp</h3>
+          <p class="text-stone-500 text-xs mt-1">Mixed Fruit Flavour</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- Tab: Tinh dầu -->
+    <div id="tab-tinhdau" role="tabpanel" aria-labelledby="btn-tab-tinhdau" class="tab-panel grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+      <div class="col-span-full flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/80 rounded-3xl px-6 py-5 border border-white shadow-sm">
+        <div class="flex items-start gap-4">
+          <div class="icon-circle"><i class="fa-solid fa-droplet text-gold-700 text-xl" aria-hidden="true"></i></div>
+          <div>
+            <h3 class="font-serif text-2xl font-semibold text-stone-900">Tinh dầu <span class="text-sm font-sans font-medium text-stone-500">· 11 sản phẩm</span></h3>
+            <p class="font-sans text-stone-600 text-sm mt-1">Tinh dầu hoa, trái cây và thảo mộc nguyên chất, đóng gói công nghiệp 1kg.</p>
+          </div>
+        </div>
+        <div class="flex pl-3 md:pl-0" aria-hidden="true"><img src="assets/images/gallery/gallery-product-1.jpg" alt="" loading="lazy" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-4 border-white shadow-sm -ml-3 first:ml-0" /><img src="assets/images/gallery/gallery-product-2.jpg" alt="" loading="lazy" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-4 border-white shadow-sm -ml-3 first:ml-0" /><img src="assets/images/gallery/gallery-product-4.jpg" alt="" loading="lazy" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-4 border-white shadow-sm -ml-3 first:ml-0" /></div>
+      </div>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/essential-oils/product-lily-essential-oil.jpg" alt="Tinh Dầu Hoa Ly" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Tinh dầu hoa</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Tinh Dầu Hoa Ly</h3>
+          <p class="text-stone-500 text-xs mt-1">Lily Essential Oil</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/essential-oils/product-mandarin-essential-oil.webp" srcset="assets/images/products/essential-oils/product-mandarin-essential-oil-thumb.webp 150w, assets/images/products/essential-oils/product-mandarin-essential-oil-sm.webp 300w, assets/images/products/essential-oils/product-mandarin-essential-oil.webp 500w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw" alt="Tinh Dầu Quýt" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Tinh dầu trái cây</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Tinh Dầu Quýt (Mandarin)</h3>
+          <p class="text-stone-500 text-xs mt-1">Mandarin Essential Oil</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/essential-oils/product-vanilla-essential-oil.jpg" alt="Tinh Dầu Vani" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Tinh dầu đặc biệt</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Tinh Dầu Vani</h3>
+          <p class="text-stone-500 text-xs mt-1">Vanilla Essential Oil</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/gallery/gallery-product-2.jpg" alt="Tinh Dầu Bưởi" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Tinh dầu trái cây</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Tinh Dầu Bưởi</h3>
+          <p class="text-stone-500 text-xs mt-1">Grapefruit Essential Oil</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/gallery/gallery-product-1.jpg" alt="Tinh Dầu Hoa Nhài" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Tinh dầu hoa</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Tinh Dầu Hoa Nhài</h3>
+          <p class="text-stone-500 text-xs mt-1">Jasmine Essential Oil</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/gallery/gallery-product-3.jpg" alt="Tinh Dầu Phong Lữ" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Tinh dầu hoa</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Tinh Dầu Phong Lữ</h3>
+          <p class="text-stone-500 text-xs mt-1">Geranium Essential Oil</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/gallery/gallery-product-4.jpg" alt="Tinh Dầu Khuynh Diệp" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Tinh dầu thảo mộc</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Tinh Dầu Khuynh Diệp</h3>
+          <p class="text-stone-500 text-xs mt-1">Eucalyptus Essential Oil</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/gallery/gallery-product-5.jpg" alt="Tinh Dầu Khuynh Diệp Chanh" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Tinh dầu thảo mộc</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Tinh Dầu Khuynh Diệp Chanh</h3>
+          <p class="text-stone-500 text-xs mt-1">Eucalyptus Citriodora</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/gallery/gallery-product-6.jpg" alt="Tinh Dầu Đinh Hương" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Tinh dầu thảo mộc</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Tinh Dầu Đinh Hương</h3>
+          <p class="text-stone-500 text-xs mt-1">Clovebud Essential Oil</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/gallery/gallery-product-7.jpg" alt="Tinh Dầu Borage" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Tinh dầu thảo mộc</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Tinh Dầu Borage</h3>
+          <p class="text-stone-500 text-xs mt-1">Borage Essential Oil</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/essential-oils/product-essential-oil-generic.jpg" alt="Tinh dầu thiên nhiên" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Tinh dầu</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Tinh Dầu Thiên Nhiên</h3>
+          <p class="text-stone-500 text-xs mt-1">Natural Essential Oil</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- Tab: Màu thực phẩm -->
+    <div id="tab-mau" role="tabpanel" aria-labelledby="btn-tab-mau" class="tab-panel grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+      <div class="col-span-full flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/80 rounded-3xl px-6 py-5 border border-white shadow-sm">
+        <div class="flex items-start gap-4">
+          <div class="icon-circle"><i class="fa-solid fa-palette text-gold-700 text-xl" aria-hidden="true"></i></div>
+          <div>
+            <h3 class="font-serif text-2xl font-semibold text-stone-900">Màu thực phẩm <span class="text-sm font-sans font-medium text-stone-500">· 8 sản phẩm</span></h3>
+            <p class="font-sans text-stone-600 text-sm mt-1">Màu tổng hợp đạt chuẩn an toàn thực phẩm, đa dạng sắc độ.</p>
+          </div>
+        </div>
+        <div class="flex pl-3 md:pl-0" aria-hidden="true"><img src="assets/images/products/food-colors/product-color-quinoline-yellow.jpg" alt="" loading="lazy" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-4 border-white shadow-sm -ml-3 first:ml-0" /><img src="assets/images/products/food-colors/product-color-brilliant-blue.jpg" alt="" loading="lazy" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-4 border-white shadow-sm -ml-3 first:ml-0" /><img src="assets/images/products/food-colors/product-color-allura-red.jpg" alt="" loading="lazy" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-4 border-white shadow-sm -ml-3 first:ml-0" /></div>
+      </div>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/food-colors/product-color-quinoline-yellow.jpg" alt="Màu Vàng Tươi" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 rounded-full bg-yellow-400 inline-block" aria-hidden="true"></span><span class="text-[10px] text-gold-700 font-sans uppercase tracking-wider">Màu thực phẩm</span></div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Quinoline Yellow – Vàng Tươi</h3>
+          
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/food-colors/product-color-ponceau-red.jpg" alt="Màu Đỏ Đậm" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 rounded-full bg-red-700 inline-block" aria-hidden="true"></span><span class="text-[10px] text-gold-700 font-sans uppercase tracking-wider">Màu thực phẩm</span></div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Ponceau 4R – Đỏ Đậm</h3>
+          
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/food-colors/product-color-tartrazine-yellow.jpg" alt="Màu Vàng Chanh" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 rounded-full bg-yellow-300 inline-block" aria-hidden="true"></span><span class="text-[10px] text-gold-700 font-sans uppercase tracking-wider">Màu thực phẩm</span></div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Tartrazine – Vàng Chanh</h3>
+          
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/food-colors/product-color-brown-ht.jpg" alt="Màu Nâu Đậm" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 rounded-full bg-amber-900 inline-block" aria-hidden="true"></span><span class="text-[10px] text-gold-700 font-sans uppercase tracking-wider">Màu thực phẩm</span></div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Brown HT – Nâu Đậm</h3>
+          
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/food-colors/product-color-violet-purple.jpg" alt="Màu Tím" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 rounded-full bg-purple-600 inline-block" aria-hidden="true"></span><span class="text-[10px] text-gold-700 font-sans uppercase tracking-wider">Màu thực phẩm</span></div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Violet – Tím</h3>
+          
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/food-colors/product-color-allura-red.jpg" alt="Màu Đỏ Hồng" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 rounded-full bg-red-400 inline-block" aria-hidden="true"></span><span class="text-[10px] text-gold-700 font-sans uppercase tracking-wider">Màu thực phẩm</span></div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Allura Red – Đỏ Hồng</h3>
+          
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/food-colors/product-color-sunset-yellow.jpg" alt="Màu Vàng Cam" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 rounded-full bg-orange-400 inline-block" aria-hidden="true"></span><span class="text-[10px] text-gold-700 font-sans uppercase tracking-wider">Màu thực phẩm</span></div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Sunset Yellow – Vàng Cam</h3>
+          
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/food-colors/product-color-brilliant-blue.jpg" alt="Màu Xanh Dương" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 rounded-full bg-blue-500 inline-block" aria-hidden="true"></span><span class="text-[10px] text-gold-700 font-sans uppercase tracking-wider">Màu thực phẩm</span></div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Brilliant Blue – Xanh Dương</h3>
+          
+        </div>
+      </article>
+    </div>
+
+    <!-- Tab: Nguyên liệu khác -->
+    <div id="tab-other" role="tabpanel" aria-labelledby="btn-tab-other" class="tab-panel grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+      <div class="col-span-full flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/80 rounded-3xl px-6 py-5 border border-white shadow-sm">
+        <div class="flex items-start gap-4">
+          <div class="icon-circle"><i class="fa-solid fa-box-open text-gold-700 text-xl" aria-hidden="true"></i></div>
+          <div>
+            <h3 class="font-serif text-2xl font-semibold text-stone-900">Nguyên liệu khác <span class="text-sm font-sans font-medium text-stone-500">· 5 sản phẩm</span></h3>
+            <p class="font-sans text-stone-600 text-sm mt-1">Nguyên liệu phụ gia cho bánh, kem, trà sữa và đồ uống.</p>
+          </div>
+        </div>
+        <div class="flex pl-3 md:pl-0" aria-hidden="true"><img src="assets/images/gallery/gallery-product-8.jpg" alt="" loading="lazy" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-4 border-white shadow-sm -ml-3 first:ml-0" /><img src="assets/images/gallery/gallery-product-10.jpg" alt="" loading="lazy" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-4 border-white shadow-sm -ml-3 first:ml-0" /><img src="assets/images/gallery/gallery-product-11.jpg" alt="" loading="lazy" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-4 border-white shadow-sm -ml-3 first:ml-0" /></div>
+      </div>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/products/other/product-non-dairy-creamer.png" alt="Bột Kem Béo Thực Vật" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Nguyên liệu phụ gia</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Bột Kem Béo Thực Vật</h3>
+          <p class="text-stone-500 text-xs mt-1">Non Dairy Creamer</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/gallery/gallery-product-8.jpg" alt="Bột Phô Mai" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Nguyên liệu phụ gia</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Bột Phô Mai</h3>
+          <p class="text-stone-500 text-xs mt-1">Cheese Powder</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/gallery/gallery-product-10.jpg" alt="Whipping Cream Powder" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Nguyên liệu phụ gia</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Whipping Cream Powder</h3>
+          <p class="text-stone-500 text-xs mt-1">Bột kem tươi</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/gallery/gallery-product-9.jpg" alt="Đường Xay Mịn" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Nguyên liệu phụ gia</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Đường Xay Mịn</h3>
+          <p class="text-stone-500 text-xs mt-1">Fine Sugar Powder</p>
+        </div>
+      </article>
+
+      <article class="product-card bg-white rounded-3xl overflow-hidden shadow-sm border border-white cursor-pointer relative">
+        <div class="relative overflow-hidden h-52">
+          <img src="assets/images/gallery/gallery-product-11.jpg" alt="Gelatine" loading="lazy" class="w-full h-full object-cover" />
+          <div class="overlay absolute inset-0 bg-stone-900/60 flex items-center justify-center">
+            <a href="#contact" class="btn-gold text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Liên hệ mua</a>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-[10px] text-gold-700 font-sans uppercase tracking-wider mb-1">Nguyên liệu phụ gia</div>
+          <h3 class="font-serif text-base font-semibold text-stone-800">Gelatine</h3>
+          <p class="text-stone-500 text-xs mt-1">Gelatin cao cấp</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="text-center mt-12 reveal">
+      <p class="text-stone-500 font-sans text-sm mb-4">Chưa tìm thấy sản phẩm bạn cần? Hãy liên hệ với chúng tôi!</p>
+      <a href="#contact" class="btn-gold font-sans font-semibold px-8 py-3 rounded-full text-sm cursor-pointer inline-block">
+        Yêu cầu sản phẩm khác <i class="fa-solid fa-arrow-right ml-1" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     GALLERY
+════════════════════════════════════ -->
+<section id="gallery" class="py-20 md:py-28 bg-rose-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-12 reveal">
+      <p class="text-gold-700 text-xs font-sans font-semibold uppercase tracking-[.2em] mb-3">Thư viện ảnh</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-stone-900 font-semibold">
+        Hình ảnh thực tế
+      </h2>
+    </div>
+
+    <!-- Masonry-style grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 reveal">
+      <div class="gallery-item col-span-2 row-span-2 h-64 md:h-auto md:aspect-square">
+        <img src="assets/images/gallery/gallery-product-1.jpg" alt="Gallery 1" loading="lazy" />
+      </div>
+      <div class="gallery-item h-32 md:h-auto">
+        <img src="assets/images/gallery/gallery-product-2.jpg" alt="Gallery 2" loading="lazy" />
+      </div>
+      <div class="gallery-item h-32 md:h-auto">
+        <img src="assets/images/gallery/gallery-product-3.jpg" alt="Gallery 3" loading="lazy" />
+      </div>
+      <div class="gallery-item h-32 md:h-auto">
+        <img src="assets/images/gallery/gallery-product-4.jpg" alt="Gallery 4" loading="lazy" />
+      </div>
+      <div class="gallery-item h-32 md:h-auto">
+        <img src="assets/images/gallery/gallery-product-5.jpg" alt="Gallery 5" loading="lazy" />
+      </div>
+      <div class="gallery-item h-32 md:h-auto col-span-2">
+        <img src="assets/images/gallery/gallery-product-6.jpg" alt="Gallery 6" loading="lazy" />
+      </div>
+      <div class="gallery-item h-32 md:h-auto">
+        <img src="assets/images/gallery/gallery-product-7.jpg" alt="Gallery 7" loading="lazy" />
+      </div>
+      <div class="gallery-item h-32 md:h-auto">
+        <img src="assets/images/gallery/gallery-product-8.jpg" alt="Gallery 8" loading="lazy" />
+      </div>
+      <div class="gallery-item h-32 md:h-auto">
+        <img src="assets/images/gallery/gallery-product-9.jpg" alt="Gallery 9" loading="lazy" />
+      </div>
+      <div class="gallery-item h-32 md:h-auto">
+        <img src="assets/images/gallery/gallery-product-10.jpg" alt="Gallery 10" loading="lazy" />
+      </div>
+      <div class="gallery-item h-32 md:h-auto">
+        <img src="assets/images/gallery/gallery-product-11.jpg" alt="Gallery 11" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     WHY US
+════════════════════════════════════ -->
+<section id="why-us" class="py-20 md:py-28 bg-sage-100 text-stone-900 relative overflow-hidden">
+  <!-- Decorative circles -->
+  <div class="absolute top-0 right-0 w-96 h-96 rounded-full bg-rose-300/30 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+  <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-sage-300/40 -translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+    <div class="text-center mb-14 reveal">
+      <p class="text-gold-700 text-xs font-sans font-semibold uppercase tracking-[.2em] mb-3">Lợi thế của chúng tôi</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-semibold mb-4">Vì sao chọn Trăng Vàng?</h2>
+      <p class="font-sans text-stone-600 text-[15px] max-w-2xl mx-auto">Hơn 10 năm kinh nghiệm, chúng tôi hiểu những gì khách hàng thực sự cần</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="p-6 rounded-3xl bg-white/85 border border-white shadow-sm reveal hover:border-gold-500 transition-colors">
+        <div class="icon-circle mb-5">
+          <svg class="w-6 h-6 text-gold-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-lg font-semibold mb-2">Giá cạnh tranh</h3>
+        <p class="font-sans text-stone-600 text-sm leading-relaxed">Mức giá linh hoạt, phù hợp từ đơn vị sản xuất nhỏ lẻ đến doanh nghiệp lớn.</p>
+      </div>
+
+      <div class="p-6 rounded-3xl bg-white/85 border border-white shadow-sm reveal hover:border-gold-500 transition-colors" style="transition-delay:.1s">
+        <div class="icon-circle mb-5">
+          <svg class="w-6 h-6 text-gold-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-lg font-semibold mb-2">Hỗ trợ 24/7</h3>
+        <p class="font-sans text-stone-600 text-sm leading-relaxed">Đội ngũ tư vấn nhiệt tình, chuyên nghiệp, sẵn sàng hỗ trợ mọi lúc.</p>
+      </div>
+
+      <div class="p-6 rounded-3xl bg-white/85 border border-white shadow-sm reveal hover:border-gold-500 transition-colors" style="transition-delay:.2s">
+        <div class="icon-circle mb-5">
+          <svg class="w-6 h-6 text-gold-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-lg font-semibold mb-2">Đa quốc gia</h3>
+        <p class="font-sans text-stone-600 text-sm leading-relaxed">Nguồn gốc nguyên liệu uy tín từ Hàn Quốc, Pháp, Mỹ, Trung Quốc, Việt Nam.</p>
+      </div>
+
+      <div class="p-6 rounded-3xl bg-white/85 border border-white shadow-sm reveal hover:border-gold-500 transition-colors" style="transition-delay:.3s">
+        <div class="icon-circle mb-5">
+          <svg class="w-6 h-6 text-gold-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-lg font-semibold mb-2">Đóng gói linh hoạt</h3>
+        <p class="font-sans text-stone-600 text-sm leading-relaxed">Từ 1kg đến nguyên liệu số lượng lớn, đáp ứng mọi nhu cầu sản xuất.</p>
+      </div>
+    </div>
+
+    <!-- Certificate image -->
+    <div class="mt-14 text-center reveal">
+      <img src="assets/images/about/certificate-or-banner.png" alt="Chứng chỉ Trăng Vàng"
+           class="inline-block rounded-3xl shadow-2xl max-w-full md:max-w-2xl opacity-90" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════ -->
+<section class="py-20 md:py-28 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-12 reveal">
+      <p class="text-gold-700 text-xs font-sans font-semibold uppercase tracking-[.2em] mb-3">Đánh giá khách hàng</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-stone-900 font-semibold">Khách hàng nói gì?</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto items-stretch">
+      <div class="testimonial-card bg-white rounded-3xl p-7 shadow-sm border border-white reveal flex flex-col h-full">
+        <!-- Quote mark -->
+        <div class="text-gold-300 font-serif text-6xl leading-none mb-3" aria-hidden="true">"</div>
+        <p class="font-sans text-stone-600 text-[15px] leading-relaxed mb-5 flex-1">
+          Mỗi hương liệu đều có hai loại quy cách đóng gói: nguyên liệu số lượng lớn và loại đóng gói nhỏ tiện dụng từ 1kg đến 5kg. Trăng Vàng quan tâm đến nhu cầu của cả doanh nghiệp lớn lẫn đơn vị sản xuất nhỏ lẻ — một lợi thế trong ngành thực phẩm đang phát triển mạnh.
+        </p>
+        <div class="flex items-center gap-3 mt-auto pt-5 border-t border-rose-100">
+          <img src="assets/images/testimonials/testimonial-avatar-1.png" alt="Nguyễn Anh Tú"
+               class="w-11 h-11 rounded-full object-cover border-2 border-gold-300" />
+          <div>
+            <div class="font-sans font-semibold text-stone-800 text-sm">Nguyễn Anh Tú</div>
+            <div class="text-stone-500 text-xs">TP. Hồ Chí Minh</div>
+          </div>
+          <div class="ml-auto flex gap-0.5">
+            <span class="text-gold-500 text-sm" role="img" aria-label="5 sao"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card bg-white rounded-3xl p-7 shadow-sm border border-white reveal flex flex-col h-full" style="transition-delay:.15s">
+        <div class="text-gold-300 font-serif text-6xl leading-none mb-3" aria-hidden="true">"</div>
+        <p class="font-sans text-stone-600 text-[15px] leading-relaxed mb-5 flex-1">
+          Trăng Vàng cung cấp danh mục hương liệu phong phú với nguồn gốc từ Hàn Quốc, Pháp, Mỹ, Trung Quốc và Việt Nam. Việc nhập khẩu nguyên liệu từ những nước có thế mạnh về thực phẩm giúp đảm bảo chất lượng và hương vị tinh tế.
+        </p>
+        <div class="flex items-center gap-3 mt-auto pt-5 border-t border-rose-100">
+          <img src="assets/images/testimonials/testimonial-avatar-2.png" alt="Bùi Lan Hương"
+               class="w-11 h-11 rounded-full object-cover border-2 border-gold-300" />
+          <div>
+            <div class="font-sans font-semibold text-stone-800 text-sm">Bùi Lan Hương</div>
+            <div class="text-stone-500 text-xs">TP. Hồ Chí Minh</div>
+          </div>
+          <div class="ml-auto flex gap-0.5">
+            <span class="text-gold-500 text-sm" role="img" aria-label="5 sao"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     CONTACT
+════════════════════════════════════ -->
+<section id="contact" class="py-20 md:py-28 bg-rose-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-12">
+
+    <!-- Contact info -->
+    <div class="reveal">
+      <p class="text-gold-700 text-xs font-sans font-semibold uppercase tracking-[.2em] mb-3">Liên hệ với chúng tôi</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-stone-900 font-semibold leading-tight mb-6">
+        Sẵn sàng<br/><em class="text-gold-700">hợp tác</em> cùng bạn
+      </h2>
+      <p class="font-sans text-stone-500 text-[15px] leading-relaxed mb-8">
+        Hãy liên hệ để được tư vấn sản phẩm, bảng giá và chính sách hợp tác phù hợp với nhu cầu của bạn.
+      </p>
+
+      <div class="space-y-5">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <i class="fa-solid fa-location-dot text-gold-700" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="font-sans font-semibold text-stone-800 text-sm mb-0.5">Địa chỉ</div>
+            <div class="font-sans text-stone-500 text-sm" data-cfg="contact.address">26/1A Trần Quý Cáp, Phường Bình Lợi Trung, TP.HCM</div>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <i class="fa-solid fa-phone text-gold-700" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="font-sans font-semibold text-stone-800 text-sm mb-0.5">Hotline</div>
+            <a href="tel:0909017337" data-cfg-href="tel:{contact.hotline}" data-cfg="contact.hotlineDisplay" class="font-sans text-gold-700 text-sm font-semibold hover:text-gold-800 cursor-pointer">0909 01 7337</a>
+            <span class="text-stone-300 mx-2">|</span>
+            <a href="tel:0335757812" data-cfg-href="tel:{contact.hotline2}" data-cfg="contact.hotline2Display" data-cfg-hide-empty="contact.hotline2" class="font-sans text-gold-700 text-sm font-semibold hover:text-gold-800 cursor-pointer">0335 75 7812</a>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <i class="fa-solid fa-comments text-gold-700" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="font-sans font-semibold text-stone-800 text-sm mb-0.5">Zalo / Messenger</div>
+            <div class="font-sans text-stone-500 text-sm">Nhắn tin để được phản hồi nhanh nhất</div>
+            <div class="mt-1 flex gap-4 text-sm font-semibold">
+              <a href="https://zalo.me/0909017337" data-cfg-href="{contact.zaloUrl}" target="_blank" rel="noopener" class="text-gold-700 hover:text-gold-800 cursor-pointer">Zalo</a>
+              <a href="https://m.me/tinhdautrangvang" data-cfg-href="{contact.messengerUrl}" target="_blank" rel="noopener" class="text-gold-700 hover:text-gold-800 cursor-pointer">Messenger</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <i class="fa-regular fa-clock text-gold-700" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="font-sans font-semibold text-stone-800 text-sm mb-0.5">Giờ làm việc</div>
+            <div class="font-sans text-stone-500 text-sm" data-cfg="contact.workingHoursFull">Thứ 2 – Chủ nhật (Cả tuần)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact form -->
+    <div class="reveal" style="transition-delay:.15s">
+      <form onsubmit="handleSubmit(event)" class="bg-white rounded-3xl p-7 border border-rose-100 shadow-xl space-y-5">
+        <h3 class="font-serif text-2xl text-stone-900 font-semibold mb-1">Gửi yêu cầu</h3>
+        <p class="font-sans text-stone-500 text-sm mb-4">Chúng tôi sẽ phản hồi trong vòng 2 giờ làm việc</p>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-sans text-xs font-semibold text-stone-600 mb-1.5 uppercase tracking-wider">Họ và tên *</label>
+            <input type="text" required placeholder="Nguyễn Văn A"
+              class="w-full rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-sans text-stone-800 placeholder-stone-500 focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-200 transition-colors" />
+          </div>
+          <div>
+            <label class="block font-sans text-xs font-semibold text-stone-600 mb-1.5 uppercase tracking-wider">Số điện thoại *</label>
+            <input type="tel" required placeholder="0909 xxx xxx"
+              class="w-full rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-sans text-stone-800 placeholder-stone-500 focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-200 transition-colors" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-sans text-xs font-semibold text-stone-600 mb-1.5 uppercase tracking-wider">Email</label>
+          <input type="email" placeholder="email@company.com"
+            class="w-full rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-sans text-stone-800 placeholder-stone-500 focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-200 transition-colors" />
+        </div>
+
+        <div>
+          <label class="block font-sans text-xs font-semibold text-stone-600 mb-1.5 uppercase tracking-wider">Sản phẩm quan tâm</label>
+          <select class="w-full rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-sans text-stone-800 focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-200 transition-colors cursor-pointer">
+            <option value="">-- Chọn danh mục --</option>
+            <option>Hương liệu thực phẩm</option>
+            <option>Tinh dầu</option>
+            <option>Màu thực phẩm</option>
+            <option>Nguyên liệu phụ gia khác</option>
+            <option>Nhiều sản phẩm</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-sans text-xs font-semibold text-stone-600 mb-1.5 uppercase tracking-wider">Nội dung</label>
+          <textarea rows="4" placeholder="Mô tả nhu cầu của bạn, số lượng dự kiến..."
+            class="w-full rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-sans text-stone-800 placeholder-stone-500 focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-200 transition-colors resize-none"></textarea>
+        </div>
+
+        <button type="submit" class="btn-gold w-full font-sans font-semibold py-3 rounded-2xl text-sm cursor-pointer">
+          Gửi yêu cầu tư vấn <i class="fa-solid fa-arrow-right ml-1" aria-hidden="true"></i>
+        </button>
+
+        <p id="form-msg" class="hidden text-center text-sm font-sans text-green-700 font-semibold" role="status">
+          <i class="fa-solid fa-circle-check" aria-hidden="true"></i> Đã gửi! Chúng tôi sẽ liên hệ bạn sớm nhất.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer class="bg-rose-100 text-stone-700 py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+      <!-- Brand -->
+      <div class="sm:col-span-2 lg:col-span-1">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-700 flex items-center justify-center p-0.5">
+            <img data-cfg-src="brand.initials" src="assets/images/about/founder-photo.jpg" alt="Logo" class="w-full h-full object-cover rounded-full" />
+          </div>
+          <div>
+            <div class="font-serif font-semibold text-stone-900 text-base" data-cfg="brand.name">Trăng Vàng</div>
+            <div class="text-[10px] text-stone-600 uppercase tracking-widest" data-cfg="brand.nameEn">Golden Moon</div>
+          </div>
+        </div>
+        <p class="text-stone-700 text-sm leading-relaxed">
+          Chuyên cung cấp tinh dầu, hương liệu và nguyên liệu chất lượng cao phục vụ ngành thực phẩm, dược phẩm và mỹ phẩm.
+        </p>
+      </div>
+
+      <!-- Quick links -->
+      <div>
+        <h4 class="font-sans font-semibold text-stone-900 text-sm mb-4 uppercase tracking-wider">Liên kết nhanh</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="#home"     class="hover:text-gold-700 hover:underline transition-colors cursor-pointer">Trang chủ</a></li>
+          <li><a href="#about"    class="hover:text-gold-700 hover:underline transition-colors cursor-pointer">Giới thiệu</a></li>
+          <li><a href="#products" class="hover:text-gold-700 hover:underline transition-colors cursor-pointer">Sản phẩm</a></li>
+          <li><a href="#gallery"  class="hover:text-gold-700 hover:underline transition-colors cursor-pointer">Thư viện</a></li>
+          <li><a href="#contact"  class="hover:text-gold-700 hover:underline transition-colors cursor-pointer">Liên hệ</a></li>
+        </ul>
+      </div>
+
+      <!-- Products -->
+      <div>
+        <h4 class="font-sans font-semibold text-stone-900 text-sm mb-4 uppercase tracking-wider">Sản phẩm</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="#products" onclick="switchTab('tab-huong')" class="hover:text-gold-700 hover:underline transition-colors cursor-pointer">Hương liệu</a></li>
+          <li><a href="#products" onclick="switchTab('tab-tinhdau')" class="hover:text-gold-700 hover:underline transition-colors cursor-pointer">Tinh dầu</a></li>
+          <li><a href="#products" onclick="switchTab('tab-mau')" class="hover:text-gold-700 hover:underline transition-colors cursor-pointer">Màu thực phẩm</a></li>
+          <li><a href="#products" onclick="switchTab('tab-other')" class="hover:text-gold-700 hover:underline transition-colors cursor-pointer">Nguyên liệu phụ gia</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4 class="font-sans font-semibold text-stone-900 text-sm mb-4 uppercase tracking-wider">Liên hệ</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li class="flex gap-2">
+            <i class="fa-solid fa-location-dot text-gold-700 mt-1 flex-shrink-0" aria-hidden="true"></i>
+            <span data-cfg="contact.addressShort">26/1A Trần Quý Cáp, P. Bình Lợi Trung, TP.HCM</span>
+          </li>
+          <li><a href="tel:0909017337" data-cfg-href="tel:{contact.hotline}" class="text-gold-700 hover:text-gold-800 cursor-pointer font-medium"><i class="fa-solid fa-phone mr-1" aria-hidden="true"></i> <span data-cfg="contact.hotlineDisplay">0909 01 7337</span></a></li>
+          <li><a href="tel:0335757812" data-cfg-href="tel:{contact.hotline2}" class="text-gold-700 hover:text-gold-800 cursor-pointer font-medium"><i class="fa-solid fa-phone mr-1" aria-hidden="true"></i> <span data-cfg="contact.hotline2Display">0335 75 7812</span></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-rose-200 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-700">
+      <p>© <span data-cfg="brand.copyrightYear">2025</span> <span data-cfg="brand.legalName">Công ty TNHH SX TM Trăng Vàng</span>. All rights reserved.</p>
+      <p><span data-cfg="brand.slogan">Chất lượng tạo nên giá trị</span> · <span class="text-gold-700" data-cfg="brand.nameEn">Golden Moon</span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════
+     FLOATING BUTTONS
+════════════════════════════════════ -->
+<div class="fixed bottom-6 right-4 z-50 flex flex-col gap-3 items-end">
+  <!-- Zalo -->
+  <a href="https://zalo.me/0909017337" data-cfg-href="{contact.zaloUrl}" target="_blank" rel="noopener"
+     class="float-btn w-12 h-12 rounded-full shadow-lg flex items-center justify-center cursor-pointer"
+     style="background:var(--color-zalo)" title="Chat Zalo" aria-label="Chat Zalo">
+    <img src="assets/images/icons/icon-zalo.svg" alt="" class="w-6 h-6" />
+  </a>
+
+  <!-- Messenger -->
+  <a href="https://m.me/tinhdautrangvang" data-cfg-href="{contact.messengerUrl}" target="_blank" rel="noopener"
+     class="float-btn w-12 h-12 rounded-full shadow-lg flex items-center justify-center cursor-pointer text-white text-2xl"
+     style="background:var(--color-messenger)" title="Chat Messenger" aria-label="Chat Messenger">
+    <i class="fa-brands fa-facebook-messenger" aria-hidden="true"></i>
+  </a>
+
+  <!-- Call -->
+  <a href="tel:0909017337" data-cfg-href="tel:{contact.hotline}"
+     class="float-btn w-12 h-12 rounded-full shadow-lg flex items-center justify-center cursor-pointer animate-pulse text-white text-xl"
+     style="background:var(--color-call)" title="Gọi ngay" aria-label="Gọi ngay">
+    <i class="fa-solid fa-phone" aria-hidden="true"></i>
+  </a>
+
+  <!-- Scroll to top -->
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})"
+     id="scroll-top"
+     class="float-btn w-10 h-10 rounded-full bg-stone-900 shadow-lg flex items-center justify-center cursor-pointer opacity-0 transition-opacity"
+     title="Lên đầu trang" aria-label="Scroll to top">
+    <i class="fa-solid fa-chevron-up text-white text-sm" aria-hidden="true"></i>
+  </button>
+</div>
+
+<!-- ════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════ -->
+<script>
+  // ── Hamburger ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+  });
+
+  // Close mobile menu on link click
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => { mobileMenu.classList.remove('open'); hamburger.setAttribute('aria-expanded', 'false'); });
+  });
+
+  // ── Sticky nav shadow ──
+  const navbar = document.getElementById('navbar');
+  const scrollTopBtn = document.getElementById('scroll-top');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      navbar.classList.add('scrolled');
+      scrollTopBtn.style.opacity = '1';
+    } else {
+      navbar.classList.remove('scrolled');
+      scrollTopBtn.style.opacity = '0';
+    }
+  }, { passive: true });
+
+  // ── Active nav link (scroll-spy + click) ──
+  const navLinks = document.querySelectorAll('.nav-link');
+  const spySections = [...navLinks].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+  function setActive(id) {
+    navLinks.forEach(l => {
+      const on = l.getAttribute('href') === '#' + id;
+      l.classList.toggle('active', on);
+      if (on) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current');
+    });
+  }
+  let spyLock = false;
+  function spy() {
+    if (spyLock) return;
+    const y = window.scrollY + 120;
+    let current = spySections[0].id;
+    spySections.forEach(sec => { if (sec.offsetTop <= y) current = sec.id; });
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 4) current = spySections[spySections.length - 1].id;
+    setActive(current);
+  }
+  navLinks.forEach(l => l.addEventListener('click', () => {
+    setActive(l.getAttribute('href').slice(1));
+    spyLock = true; setTimeout(() => { spyLock = false; spy(); }, 800);
+  }));
+  window.addEventListener('scroll', spy, { passive: true });
+  spy();
+
+  // ── Reveal on scroll ──
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(r => revealObserver.observe(r));
+
+  // ── Tab switching ──
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    const btnMap = {
+      'tab-huong': 'btn-tab-huong',
+      'tab-tinhdau': 'btn-tab-tinhdau',
+      'tab-mau': 'btn-tab-mau',
+      'tab-other': 'btn-tab-other',
+    };
+    document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('aria-selected', 'false'));
+    const activeBtn = document.getElementById(btnMap[tabId]);
+    activeBtn.classList.add('active');
+    activeBtn.setAttribute('aria-selected', 'true');
+    
+    // Scroll back to sticky tabs if user is scrolled past them
+    const tabsContainer = document.getElementById('product-tabs-container');
+    const productsSection = document.getElementById('products');
+    if (tabsContainer && productsSection) {
+      const rect = tabsContainer.getBoundingClientRect();
+      const headerOffset = 90; // approximate main header height + buffer
+      if (rect.top <= headerOffset) {
+        const productsTop = productsSection.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: productsTop - 60,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }
+
+  // ── Contact form ──
+  function handleSubmit(e) {
+    e.preventDefault();
+    const msg = document.getElementById('form-msg');
+    msg.classList.remove('hidden');
+    e.target.reset();
+    setTimeout(() => msg.classList.add('hidden'), 5000);
+  }
+</script>
+
+</body>
+</html>
